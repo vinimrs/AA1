@@ -25,16 +25,16 @@
     <table>
       <tr>
         <th><fmt:message key="user.login" />:</th>
-        <td><input type="text" name="login"
+        <td><input id="login" type="text" name="login"
                    value="${param.login}"/></td>
       </tr>
       <tr>
         <th><fmt:message key="user.password" />:</th>
-        <td><input type="password" name="senha" /></td>
+        <td><input id="password" type="password" name="senha" /></td>
       </tr>
       <tr>
         <td colspan="2">
-          <input type="submit" name="bOK" value="<fmt:message key="user.login"/>">
+          <input id="input-submit" type="submit" name="bOK" value="<fmt:message key="user.login"/>">
         </td>
       </tr>
     </table>

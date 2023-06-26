@@ -41,7 +41,6 @@ public class LoginTest {
     paginaDeLogin.efetuarLoginAdmin();
 
     assertTrue(paginaDeLogin.isPaginaDeLoginComDadosInvalidos());
-//    assertNull(paginaDeLogin.getNomeUsuarioLogado());
   }
 
   // teste de autenticacao

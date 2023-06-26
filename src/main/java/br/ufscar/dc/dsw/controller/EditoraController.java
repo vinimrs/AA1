@@ -90,16 +90,6 @@ public class EditoraController extends HttpServlet {
         }
     }
 
-//    private void verificaAutorizacao(Usuario usuario, Erro erros, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        if (!usuario.getPapel().equals("ADMIN")) {
-//            erros.add("Acesso não autorizado!");
-//            erros.add("Apenas Papel [ADMIN] tem acesso a essa página");
-//            request.setAttribute("mensagens", erros);
-//            RequestDispatcher rd = request.getRequestDispatcher("/noAuth.jsp");
-//            rd.forward(request, response);
-//        }
-//    }
-
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Editora> listaEditoras = dao.getAll();
         request.setAttribute("listaEditoras", listaEditoras);

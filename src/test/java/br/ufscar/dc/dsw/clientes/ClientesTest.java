@@ -42,6 +42,8 @@ public class ClientesTest {
         this.paginaDeClientes.fechar();
     }
 
+
+    // R1: CRUD de clientes (requer login de administrador)
     @Test
     public void deveriaAdicionarUmClienteNoSistema() {
 

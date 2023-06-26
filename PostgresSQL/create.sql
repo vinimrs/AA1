@@ -1,10 +1,10 @@
-drop database if exists Locadora;
+drop database if exists locadora;
 
-create database Locadora;
+create database locadora;
 
-drop table Locacao;
-drop table Cliente;
-drop table Locadora;
+drop table if exists Locacao;
+drop table if exists Cliente;
+drop table if exists Locadora;
 
 create table Locadora(id serial primary key,
                      cnpj varchar(20) unique,
@@ -36,7 +36,6 @@ create table Locacao(id serial primary key,
                      foreign key (editora_cnpj) references Locadora(cnpj),
                      foreign key (cpf_cliente) references Cliente(cpf),
                      constraint unique_cliente unique (data_locacao, horario_locacao, cpf_cliente),
-                     constraint unique_editora unique (data_locacao, horario_locacao, editora_cnpj)
 );
 
 create table Usuario(id serial primary key,

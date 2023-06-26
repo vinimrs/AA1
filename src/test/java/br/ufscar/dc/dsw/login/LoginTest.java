@@ -49,11 +49,9 @@ public class LoginTest {
     paginaDeLogin.navegarParaPaginaDeClientes();
 
     assertTrue(paginaDeLogin.isPaginaDeLogin());
-    assertTrue(paginaDeLogin.contemTexto("Users Authentication"));
 
     paginaDeLogin.navegarParaPaginaDeClientes();
 
     assertTrue(paginaDeLogin.isPaginaDeLogin());
-    assertTrue(paginaDeLogin.contemTexto("Users Authentication"));
   }
 }

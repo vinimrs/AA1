@@ -13,7 +13,7 @@
   <body>
   <div align="center">
     <h1>
-      <fmt:message key="users.welcome" />
+      <fmt:message key="locadoras.welcome" />
     </h1>
     <h2>
       <a href="/${sessionScope.contextPath}/editoras/gerenciar">
@@ -29,39 +29,39 @@
       </a>
       <br/>
       <br/>
-      <a href="/${sessionScope.contextPath}/usuarios/cadastro">
-        <fmt:message key="users.create" />
+      <a id="create-locadora-button" href="/${sessionScope.contextPath}/locadoras/cadastro">
+        <fmt:message key="locadoras.create" />
       </a>
     </h2>
-    <h3><fmt:message key="users.list" /></h3>
+    <h3><fmt:message key="locadoras.list" /></h3>
     <br/>
   </div>
   <div align="center">
-    <table border="1">
+    <table border="1" id="tabela-locadoras">
       <tr>
-        <th><fmt:message key="user.ID" /></th>
-        <th><fmt:message key="user.login" /></th>
-        <th><fmt:message key="user.password" /></th>
-        <th><fmt:message key="user.name" /></th>
-        <th><fmt:message key="user.role" /></th>
+        <th><fmt:message key="locadora.ID" /></th>
+        <th><fmt:message key="locadora.email" /></th>
+        <th><fmt:message key="locadora.name" /></th>
+        <th><fmt:message key="locadora.cnpj" /></th>
+        <th><fmt:message key="locadora.city" /></th>
         <th><fmt:message key="actions.link" /></th>
       </tr>
-      <c:forEach var="usuario" items="${requestScope.listaUsuarios}">
+      <c:forEach var="locadora" items="${requestScope.listaClientes}">
         <tr>
-          <td><c:out value="${usuario.id}" /></td>
-          <td><c:out value="${usuario.login}" /></td>
-          <td><c:out value="${usuario.senha}" /></td>
-          <td><c:out value="${usuario.nome}" /></td>
-          <td><c:out value="${usuario.papel}" /></td>
+          <td><c:out value="${locadora.id}" /></td>
+          <td><c:out value="${locadora.email}" /></td>
+          <td><c:out value="${locadora.nome}" /></td>
+          <td><c:out value="${locadora.cnpj}" /></td>
+          <td><c:out value="${locadora.cidade}" /></td>
           <td><a
-                  href="/${sessionScope.contextPath}/usuarios/edicao?id=<c:out value='${usuario.id}' />">
-            <fmt:message key="users.update" />
+                  href="/${sessionScope.contextPath}/locadoras/edicao?id=<c:out value='${locadora.id}' />">
+            <fmt:message key="locadoras.update" />
           </a>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a
-                    href="/${sessionScope.contextPath}/usuarios/remocao?id=<c:out value='${usuario.id}' />"
+                    href="/${sessionScope.contextPath}/locadoras/remocao?id=<c:out value='${locadora.id}' />"
                     onclick="return confirm('<fmt:message key="confirm.link" />');">
-              <fmt:message key="users.delete" />
+              <fmt:message key="locadoras.delete" />
             </a>
           </td>
         </tr>

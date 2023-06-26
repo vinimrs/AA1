@@ -37,10 +37,10 @@ public class ClientesTest {
 
     }
 
-    @AfterEach
-    public void afterEach() {
-        this.paginaDeClientes.fechar();
-    }
+//    @AfterEach
+//    public void afterEach() {
+//        this.paginaDeClientes.fechar();
+//    }
 
 
     // R1: CRUD de clientes (requer login de administrador)

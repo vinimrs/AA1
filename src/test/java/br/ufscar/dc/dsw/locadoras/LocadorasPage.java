@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.locadoras;
 
 import br.ufscar.dc.dsw.PageObject;
+import br.ufscar.dc.dsw.domain.Locadora;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -75,6 +76,23 @@ public class LocadorasPage extends PageObject {
   public boolean isPaginaDeLocadoras() {
       return browser.getCurrentUrl().equals(URL_LOCADORAS);
   }
+
+    public void removerLocadoraIgual(Locadora locadora) {
+        for (WebElement l: linhas) {
+            String emailLinha = l.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            String cpfLinha = l.findElement(By.cssSelector("td:nth-child(4)")).getText();
+
+            if(emailLinha.equals(email) || cpfLinha.equals(cpf)) {
+                WebElement colunaActions = l.findElement(By.cssSelector("td:nth-child(6)"));
+                WebElement acaoDeDeletar = colunaActions.findElement(By.cssSelector("a:nth-child(2)"));
+                acaoDeDeletar.click();
+
+                browser.switchTo().alert().accept();
+
+                break;
+            }
+        }
+    }
 
 //  public void removerLocadoraComEmailOuCpfIgual(String email, String cpf) {
 //    List<WebElement> linhas = this.browser.findElements(By.cssSelector("#tabela-clientes tr:not(:first-child)"));

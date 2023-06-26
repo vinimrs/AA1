@@ -30,6 +30,6 @@ abstract public class GenericDAO {
 
         /* Conexão banco de dados MySQL */
 
-        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/livraria", "postgres", "postgres");
+        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/locadora", "postgres", "postgres");
     }
 }

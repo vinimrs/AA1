@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw.clientes;
 
 import br.ufscar.dc.dsw.PageObject;
 import br.ufscar.dc.dsw.domain.Cliente;
+import br.ufscar.dc.dsw.locadoras.LocadorasPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -99,4 +100,10 @@ public class ClientesPage extends PageObject {
     }
   }
 
+  public LocadorasPage acessarPaginaDeLocadoras() {
+      WebElement linkParaLocadoras = this.browser.findElement(By.id("#link-locadoras"));
+      linkParaLocadoras.click();
+
+      return new LocadorasPage(browser);
+  }
 }

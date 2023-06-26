@@ -3,6 +3,7 @@ package br.ufscar.dc.dsw.login;
 import br.ufscar.dc.dsw.PageObject;
 import br.ufscar.dc.dsw.clientes.ClientesPage;
 import br.ufscar.dc.dsw.locacoes.LocacoesPage;
+import br.ufscar.dc.dsw.locadoras.LocadorasPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
@@ -48,4 +49,10 @@ public class LoginPage extends PageObject {
     browser.findElement(By.id("input-submit")).click();
     return new ClientesPage(browser);
   }
+
+  // verificar qual pagina a locadora vai dps do login
+    public LoginPage efetuarLoginLocadora() {
+      browser.findElement(By.id("input-submit")).click();
+      return new LoginPage();
+    }
 }

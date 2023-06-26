@@ -1,37 +1,92 @@
-drop database if exists Livraria;
+drop database if exists Locadora;
 
-create database Livraria;
+create database Locadora;
 
--- use Livraria;
-drop table Compra;
+drop table Locacao;
+drop table Cliente;
+drop table Locadora;
 
-drop table Livro;
-drop table Usuario;
-drop table Editora;
+create table Locadora(id serial primary key,
+                     cnpj varchar(20) unique,
+                      nome varchar(256) not null,
+                      email varchar(256) not null,
+                      senha varchar(256) not null,
+                      cidade varchar(256) not null);
+
+create table Cliente(id serial primary key,
+                     cpf varchar(15) unique,
+                     nome varchar(256) not null,
+                     email varchar(256) not null unique,
+                     senha varchar(64) not null,
+                     telefone varchar(50) not null,
+                     sexo varchar(50) not null,
+                     data_nascimento date not null);
+
+create table Admin(id serial primary key,
+                    nome varchar(256) not null,
+                    login varchar(20) not null unique,
+                    senha varchar(64) not null);
 
 
-create table Editora(id serial primary key, cnpj varchar(18) not null, nome varchar(256) not null);
+create table Locacao(id serial primary key,
+                     data_locacao date not null,
+                     horario_locacao time not null,
+                     cpf_cliente varchar(15) not null,
+                     editora_cnpj varchar(20) not null,
+                     foreign key (editora_cnpj) references Locadora(cnpj),
+                     foreign key (cpf_cliente) references Cliente(cpf),
+                     constraint unique_cliente unique (data_locacao, horario_locacao, cpf_cliente),
+                     constraint unique_editora unique (data_locacao, horario_locacao, editora_cnpj)
+);
 
-create table Livro(id serial primary key, titulo varchar(256) not null, autor varchar(256) not null, ano integer not null, preco float not null, editora_id bigint not null, foreign key (editora_id) references Editora(id));
+create table Usuario(id serial primary key,
+                     nome varchar(256) not null,
+                     login varchar(20) not null unique,
+                     senha varchar(64) not null,
+                     papel varchar(10));
 
-insert into Editora(cnpj, nome) values  ('55.789.390/0008-99', 'Companhia das Letras');
 
-insert into Editora(cnpj, nome) values ('71.150.470/0001-40', 'Record');
+insert into Locadora(cnpj, nome, email, senha, cidade) values ('55.789.390/0008-99',
+                                                               'Locação dos Brito',
+                                                               'locacaobrito@email.com',
+                                                               '12345678',
+                                                               'São Carlos');
+insert into Locadora(cnpj, nome, email, senha, cidade) values ('71.150.470/0001-40',
+                                                               'Locação dos Oliveiras',
+                                                               'locacaooliveiras@email.com',
+                                                               '12345678',
+                                                               'São Carlos');
 
-insert into Editora(cnpj, nome) values ('32.106.536/0001-82', 'Objetiva');
+insert into Cliente(cpf,nome,email,senha,telefone, sexo,data_nascimento) values (
+                                                                                    '111.111.111-00',
+                                                                                    'Joaquin das Neves',
+                                                                                    'joaquin@email.com',
+                                                                                    '12345678',
+                                                                                    '(82)99183-9092',
+                                                                                    'Masculino',
+                                                                                    '18/02/2004');
 
-insert into Livro(titulo, autor, ano, preco, editora_id) values ('Ensaio sobre a Cegueira', 'José Saramago', 1995, 54.9, 1);
+insert into Cliente(cpf,nome,email,senha,telefone, sexo,data_nascimento) values (
+                                                                                    '222.222.222-00',
+                                                                                    'João Ferreira',
+                                                                                    'ferreira@email.com',
+                                                                                    '12345678',
+                                                                                    '(41)99999-9999',
+                                                                                    'Masculino',
+                                                                                    '18/09/2000');
 
-insert into Livro(titulo, autor, ano, preco, editora_id) values  ('Cem anos de Solidão', 'Gabriel Garcia Márquez', 1977, 59.9, 2);
+insert into Locacao(data_locacao,horario_locacao,cpf_cliente,editora_cnpj) values (
+                                                                                      '22/12/2023',
+                                                                                      '12:00',
+                                                                                      '222.222.222-00',
+                                                                                      '71.150.470/0001-40'
+                                                                                  );
 
-insert into Livro(titulo, autor, ano, preco, editora_id) values ('Diálogos Impossíveis', 'Luis Fernando Verissimo', 2012, 22.9, 3);
+insert into Locacao(data_locacao,horario_locacao,cpf_cliente,editora_cnpj) values (
+                                                                                      '22/12/2023',
+                                                                                      '12:00',
+                                                                                      '111.111.111-00',
+                                                                                      '55.789.390/0008-99'
+                                                                                  );
 
-create table Usuario(id serial primary key, nome varchar(256) not null, login varchar(20) not null unique, senha varchar(64) not null, papel varchar(10));
-
-insert into Usuario(nome, login, senha, papel) values ('Administrador', 'admin', 'admin', 'ADMIN');
-
-insert into Usuario(nome, login, senha, papel) values ('Usuario', 'user', 'user', 'USER');
-
-create table Compra(id serial primary key, data varchar(10) not null, valor float not null, livro_id bigint not null, usuario_id bigint not null, foreign key (livro_id) references Livro(id), foreign key (usuario_id) references Usuario(id));
-
-insert into Compra(data, valor, livro_id, usuario_id) values ('30/08/2020', 10.88, 1, 2);
+insert into Admin(nome, login, senha) values ('Administrador', 'admin', 'admin');

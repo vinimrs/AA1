@@ -26,10 +26,14 @@
     </tr>
   </c:forEach>
 </table>
+
+<input type="date" />
+<input type="time" step="3600000" />
+<input type='time' step="3600" >
 <br/>
 <br/>
 
 <tr>
-  <td colspan="2" align="center"><input type="submit"
+  <td colspan="2" align="center"><input id="submit-button" type="submit"
                                         value="<fmt:message key="save.link" />" /></td>
 </tr>

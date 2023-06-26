@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ufscar.dc.dsw.dao.UsuarioDAO;
+import br.ufscar.dc.dsw.dao.AdminDAO;
+import br.ufscar.dc.dsw.dao.ClienteDAO;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
 
@@ -31,15 +32,23 @@ public class IndexController extends HttpServlet {
                 erros.add("Senha não informada!");
             }
             if (!erros.isExisteErros()) {
-                UsuarioDAO dao = new UsuarioDAO();
-                Usuario usuario = dao.getbyLogin(login);
+                ClienteDAO clienteDAO = new ClienteDAO();
+                Usuario usuario = clienteDAO.getByEmail(login);
+
+                if(usuario == null) {
+                    AdminDAO adminDAO = new AdminDAO();
+                    usuario = adminDAO.getByLogin(login);
+                }
+//                Usuario usuario = dao.getbyLogin(login);
                 if (usuario != null) {
                     if (usuario.getSenha().equalsIgnoreCase(senha)) {
                         request.getSession().setAttribute("usuarioLogado", usuario);
                         String contextPath = request.getContextPath().replace("/", "");
                         request.getSession().setAttribute("contextPath", contextPath);
                         if (usuario.getPapel().equals("ADMIN")) {
-                            response.sendRedirect("usuarios/");
+                            response.sendRedirect("clientes/");
+                        } else if (usuario.getPapel().equals("CLIENTE")){
+                            response.sendRedirect("editoras/");
                         } else {
                             response.sendRedirect("compras/");
                         }

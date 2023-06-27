@@ -77,22 +77,22 @@ public class LocadorasPage extends PageObject {
       return browser.getCurrentUrl().equals(URL_LOCADORAS);
   }
 
-    public void removerLocadoraIgual(Locadora locadora) {
-        for (WebElement l: linhas) {
-            String emailLinha = l.findElement(By.cssSelector("td:nth-child(2)")).getText();
-            String cpfLinha = l.findElement(By.cssSelector("td:nth-child(4)")).getText();
-
-            if(emailLinha.equals(email) || cpfLinha.equals(cpf)) {
-                WebElement colunaActions = l.findElement(By.cssSelector("td:nth-child(6)"));
-                WebElement acaoDeDeletar = colunaActions.findElement(By.cssSelector("a:nth-child(2)"));
-                acaoDeDeletar.click();
-
-                browser.switchTo().alert().accept();
-
-                break;
-            }
-        }
-    }
+//    public void removerLocadoraIgual(Locadora locadora) {
+//        for (WebElement l: linhas) {
+//            String emailLinha = l.findElement(By.cssSelector("td:nth-child(2)")).getText();
+//            String cpfLinha = l.findElement(By.cssSelector("td:nth-child(4)")).getText();
+//
+//            if(emailLinha.equals(email) || cpfLinha.equals(cpf)) {
+//                WebElement colunaActions = l.findElement(By.cssSelector("td:nth-child(6)"));
+//                WebElement acaoDeDeletar = colunaActions.findElement(By.cssSelector("a:nth-child(2)"));
+//                acaoDeDeletar.click();
+//
+//                browser.switchTo().alert().accept();
+//
+//                break;
+//            }
+//        }
+//    }
 
 //  public void removerLocadoraComEmailOuCpfIgual(String email, String cpf) {
 //    List<WebElement> linhas = this.browser.findElements(By.cssSelector("#tabela-clientes tr:not(:first-child)"));

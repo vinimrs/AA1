@@ -46,7 +46,7 @@
         <th><fmt:message key="locadora.city" /></th>
         <th><fmt:message key="actions.link" /></th>
       </tr>
-      <c:forEach var="locadora" items="${requestScope.listaClientes}">
+      <c:forEach var="locadora" items="${requestScope.listaLocadoras}">
         <tr>
           <td><c:out value="${locadora.id}" /></td>
           <td><c:out value="${locadora.email}" /></td>

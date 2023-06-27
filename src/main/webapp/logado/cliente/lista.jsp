@@ -16,8 +16,8 @@
       <fmt:message key="clients.welcome" />
     </h1>
     <h2>
-      <a href="/${sessionScope.contextPath}/editoras/gerenciar">
-        <fmt:message key="publishers.entity" />
+      <a href="/${sessionScope.contextPath}/locadoras/gerenciamento">
+        <fmt:message key="locadoras.entity" />
       </a>
       &nbsp;&nbsp;&nbsp;
       <a href="/${sessionScope.contextPath}/livros">

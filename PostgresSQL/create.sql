@@ -35,7 +35,7 @@ create table Locacao(id serial primary key,
                      editora_cnpj varchar(20) not null,
                      foreign key (editora_cnpj) references Locadora(cnpj),
                      foreign key (cpf_cliente) references Cliente(cpf),
-                     constraint unique_cliente unique (data_locacao, horario_locacao, cpf_cliente),
+                     constraint unique_cliente unique (data_locacao, horario_locacao, cpf_cliente)
 );
 
 create table Usuario(id serial primary key,

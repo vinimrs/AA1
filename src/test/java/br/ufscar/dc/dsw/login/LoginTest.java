@@ -31,8 +31,6 @@ public class LoginTest {
     ClientesPage paginaDeClientes = paginaDeLogin.efetuarLoginAdmin();
 
     assertTrue(paginaDeClientes.isPaginaDeClientes());
-//    assertEquals("fulano", paginaDeLogin.getNomeUsuarioLogado());
-
   }
 
   @Test

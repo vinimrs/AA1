@@ -16,7 +16,7 @@
       <fmt:message key="clients.welcome" />
     </h1>
     <h2>
-      <a href="/${sessionScope.contextPath}/locadoras/gerenciamento">
+      <a id="link-locadoras" href="/${sessionScope.contextPath}/locadoras/gerenciamento">
         <fmt:message key="locadoras.entity" />
       </a>
       &nbsp;&nbsp;&nbsp;

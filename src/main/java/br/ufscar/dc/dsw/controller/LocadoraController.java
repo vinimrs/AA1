@@ -51,6 +51,7 @@ public class LocadoraController extends HttpServlet {
         } else if(usuario == null) {
             erros.add("Usuário não logado.");
             request.setAttribute("mensagens", erros);
+//            response.sendRedirect(" ");
             lista(request, response);
         }  else if (!usuario.getPapel().equals("ADMIN")) {
             erros.add("Acesso não autorizado!");
@@ -128,12 +129,12 @@ public class LocadoraController extends HttpServlet {
         String senha = request.getParameter("senha");
         String email = request.getParameter("email");
         String cidade = request.getParameter("cidade");
-        Long id = Long.parseLong(request.getParameter("id"));
+//        Long id = Long.parseLong(request.getParameter("id"));
 
-        Locadora locadora = new Locadora(id, cnpj, nome, email, senha, cidade);
+        Locadora locadora = new Locadora(cnpj, nome, email, senha, cidade);
 
         dao.insert(locadora);
-        response.sendRedirect("lista");
+        response.sendRedirect("gerenciamento");
     }
 
     private void atualize(HttpServletRequest request, HttpServletResponse response)
@@ -150,7 +151,7 @@ public class LocadoraController extends HttpServlet {
         Locadora locadora = new Locadora(id, cnpj, nome, email, senha, cidade);
 
         dao.update(locadora);
-        response.sendRedirect("lista");
+        response.sendRedirect("gerenciamento");
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -158,6 +159,6 @@ public class LocadoraController extends HttpServlet {
 
         Locadora locadora = new Locadora(id);
         dao.delete(locadora);
-        response.sendRedirect("lista");
+        response.sendRedirect("gerenciamento");
     }
 }

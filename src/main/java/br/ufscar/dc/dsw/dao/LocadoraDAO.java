@@ -66,7 +66,7 @@ public class LocadoraDAO extends GenericDAO {
 
     public void delete(Locadora locadora) {
         String sql = "DELETE FROM Locadora where id = ?";
-
+        System.out.println(locadora.getId() + "ssaaaaaaaaaa");
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);

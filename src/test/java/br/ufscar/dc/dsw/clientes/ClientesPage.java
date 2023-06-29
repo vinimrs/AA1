@@ -101,7 +101,7 @@ public class ClientesPage extends PageObject {
   }
 
   public LocadorasPage acessarPaginaDeLocadoras() {
-      WebElement linkParaLocadoras = this.browser.findElement(By.id("#link-locadoras"));
+      WebElement linkParaLocadoras = this.browser.findElement(By.id("link-locadoras"));
       linkParaLocadoras.click();
 
       return new LocadorasPage(browser);

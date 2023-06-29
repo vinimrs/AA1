@@ -29,14 +29,14 @@
             </a>
             <br/>
             <br/>
-            <a href="lista">
-                <fmt:message key="locadoras.list" />
+            <a href="gerenciamento">
+                <fmt:message key="locadoras.management" />
             </a>
         </h2>
     </div>
     <div align="center">
         <c:choose>
-            <c:when test="${cliente != null}">
+            <c:when test="${locadora != null}">
                 <form action="atualizacao" method="post">
                     <%@include file="campos.jsp"%>
                 </form>

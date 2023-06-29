@@ -38,13 +38,6 @@ create table Locacao(id serial primary key,
                      constraint unique_cliente unique (data_locacao, horario_locacao, cpf_cliente)
 );
 
-create table Usuario(id serial primary key,
-                     nome varchar(256) not null,
-                     login varchar(20) not null unique,
-                     senha varchar(64) not null,
-                     papel varchar(10));
-
-
 insert into Locadora(cnpj, nome, email, senha, cidade) values ('55.789.390/0008-99',
                                                                'Locação dos Brito',
                                                                'locacaobrito@email.com',

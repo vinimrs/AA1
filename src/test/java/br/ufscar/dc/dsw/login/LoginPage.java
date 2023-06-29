@@ -3,6 +3,7 @@ package br.ufscar.dc.dsw.login;
 import br.ufscar.dc.dsw.PageObject;
 import br.ufscar.dc.dsw.clientes.ClientesPage;
 import br.ufscar.dc.dsw.locacoes.LocacoesPage;
+import br.ufscar.dc.dsw.locadoras.ListaDeLocadorasPage;
 import br.ufscar.dc.dsw.locadoras.LocadorasPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -23,13 +24,6 @@ public class LoginPage extends PageObject {
     return browser.getPageSource().contains(texto);
   }
 
-  public void navegarParaPaginaDeLocadoras() {
-    this.browser.navigate().to(BASE_URL+ "locadoras/" );
-  }
-
-  public void navegarParaPaginaDeClientes() {
-    this.browser.navigate().to(BASE_URL+ "clientes/" );
-  }
 
   public void preencheFormularioLogin(String login, String password) {
     browser.findElement(By.id("login")).sendKeys(login);
@@ -55,4 +49,18 @@ public class LoginPage extends PageObject {
       browser.findElement(By.id("input-submit")).click();
       return new LoginPage();
     }
+
+  public void navegarParaPaginaDeLocadoras() {
+    this.browser.navigate().to(BASE_URL+ "locadoras/" );
+  }
+
+  public void navegarParaPaginaDeClientes() {
+    this.browser.navigate().to(BASE_URL+ "clientes/" );
+  }
+
+
+  public ListaDeLocadorasPage navegarParaListaDeLocadoras() {
+    this.browser.navigate().to(BASE_URL+ "locadoras/" );
+    return new ListaDeLocadorasPage(browser);
+  }
 }

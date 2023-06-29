@@ -41,7 +41,6 @@ public class LocadoraController extends HttpServlet {
         Erro erros = new Erro();
 
         String action = request.getPathInfo();
-        System.out.println(action);
         if (action == null) {
             action = "/";
         }
@@ -51,7 +50,6 @@ public class LocadoraController extends HttpServlet {
         } else if(usuario == null) {
             erros.add("Usuário não logado.");
             request.setAttribute("mensagens", erros);
-//            response.sendRedirect(" ");
             lista(request, response);
         }  else if (!usuario.getPapel().equals("ADMIN")) {
             erros.add("Acesso não autorizado!");
@@ -93,6 +91,11 @@ public class LocadoraController extends HttpServlet {
 
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Locadora> listaLocadoras = dao.getAll();
+        String filtroCidade = request.getParameter("cidade");
+        if(filtroCidade != null) {
+            listaLocadoras = dao.getAllByCity(filtroCidade);
+            request.setAttribute("filtroCidade", filtroCidade);
+        }
         request.setAttribute("listaLocadoras", listaLocadoras);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/listaLocadoras.jsp");
         dispatcher.forward(request, response);

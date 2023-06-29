@@ -24,7 +24,7 @@
         <fmt:message key="books.entity" />
       </a>
       &nbsp;&nbsp;&nbsp;
-      <a href="${pageContext.request.contextPath}/logout.jsp">
+      <a id="logout-button" href="${pageContext.request.contextPath}/logout.jsp">
         <fmt:message key="exit.link" />
       </a>
       <br/>

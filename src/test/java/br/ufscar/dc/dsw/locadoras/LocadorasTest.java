@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LocadorasTest {
     LocadorasPage paginaDeLocadoras;
+    ListaDeLocadorasPage paginaListaLocadoras;
     ClientesPage paginaDeClientes;
     FormularioLocadoraPage paginaDeFormularioLocadora;
     Locadora locadora;
@@ -28,8 +29,17 @@ public class LocadorasTest {
         this.locadora = new Locadora(cnpj, nome, email, senha, cidade);
     }
 
-    @BeforeEach
-    public void beforeEach() {
+
+    @AfterEach
+    public void afterEach() {
+        if(this.paginaDeLocadoras != null) {
+            this.paginaDeLocadoras.fechar();
+        } else if(this.paginaListaLocadoras != null) {
+            this.paginaListaLocadoras.fechar();
+        }
+    }
+
+    private void entrarComoAdmin() {
         LoginPage paginaDeLogin = new LoginPage();
         paginaDeLogin.preencheFormularioLogin("admin", "admin");
         this.paginaDeClientes = paginaDeLogin.efetuarLoginAdmin();
@@ -37,14 +47,11 @@ public class LocadorasTest {
         this.paginaDeLocadoras.removerLocadoraIgual(locadora);
     }
 
-    @AfterEach
-    public void afterEach() {
-        this.paginaDeLocadoras.fechar();
-    }
 
+    // R2: CRUD de locadoras (requer login de administrador)
     @Test
     public void deveriaAdicionarUmaLocadoraNoSistema() {
-
+        this.entrarComoAdmin();
         this.paginaDeFormularioLocadora = paginaDeLocadoras.carregarFormulario();
         this.paginaDeLocadoras = paginaDeFormularioLocadora.cadastraLocadora(locadora);
 
@@ -53,6 +60,7 @@ public class LocadorasTest {
 
     @Test
     public void deveriaAtualizarUmaLocadoraNoSistema() {
+        this.entrarComoAdmin();
 
         this.paginaDeFormularioLocadora = paginaDeLocadoras.carregarFormulario();
         this.paginaDeLocadoras = paginaDeFormularioLocadora.cadastraLocadora(locadora);
@@ -76,11 +84,51 @@ public class LocadorasTest {
 
     @Test
     public void deveriaRemoverUmaLocadoraNoSistema() {
+        this.entrarComoAdmin();
+
         this.paginaDeFormularioLocadora = paginaDeLocadoras.carregarFormulario();
         this.paginaDeLocadoras = paginaDeFormularioLocadora.cadastraLocadora(locadora);
 
         this.paginaDeLocadoras.deletarLocadoraDaLista(locadora);
 
         assertFalse(this.paginaDeLocadoras.isLocadoraListada(locadora));
+    }
+
+    // R3: Listagem de todas as locadoras em uma única página (não requer login)
+    @Test
+    public void deveriaListarAsLocadorasSemLogin() {
+        this.entrarComoAdmin();
+        this.paginaDeFormularioLocadora = paginaDeLocadoras.carregarFormulario();
+        this.paginaDeLocadoras = paginaDeFormularioLocadora.cadastraLocadora(locadora);
+
+        assertTrue(this.paginaDeLocadoras.isLocadoraListada(locadora));
+
+        LoginPage paginaDeLogin = this.paginaDeLocadoras.fazerLogout();
+
+        this.paginaListaLocadoras = paginaDeLogin.navegarParaListaDeLocadoras();
+
+        assertTrue(this.paginaListaLocadoras.isLocadoraListada(locadora));
+    }
+
+    // R4: Listagem de todas as locadoras por cidade (não requer login)
+    @Test
+    public void deveriaListarAsLocadorasPorCidadeSemLogin() {
+        this.entrarComoAdmin();
+        this.paginaDeFormularioLocadora = paginaDeLocadoras.carregarFormulario();
+        this.paginaDeLocadoras = paginaDeFormularioLocadora.cadastraLocadora(locadora);
+
+        assertTrue(this.paginaDeLocadoras.isLocadoraListada(locadora));
+
+        LoginPage paginaDeLogin = this.paginaDeLocadoras.fazerLogout();
+
+        this.paginaListaLocadoras = paginaDeLogin.navegarParaListaDeLocadoras();
+
+        assertTrue(this.paginaListaLocadoras.isLocadoraListada(locadora));
+
+        this.paginaListaLocadoras.adicionarFiltroDeCidade("São Carlos");
+        assertTrue(this.paginaListaLocadoras.isLocadoraListada(locadora));
+
+        this.paginaListaLocadoras.adicionarFiltroDeCidade("Brasília");
+        assertFalse(this.paginaListaLocadoras.isLocadoraListada(locadora));
     }
 }

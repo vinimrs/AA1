@@ -16,18 +16,18 @@ public class CadastroLocacaoPage extends PageObject {
         super(browser);
     }
 
-    public LocacoesPage cadastrarLocacao(String data, String hora) {
-        WebElement ultimaLinha = this.browser.findElement(By.cssSelector("#tabela-leiloes tbody tr:last-child"));
+    public ListaDeLocacoesClientePage cadastrarLocacao(String data, String hora) {
+        WebElement ultimaLinha = this.browser.findElement(By.cssSelector("#tabela-locadoras tbody tr:last-child"));
         WebElement input = ultimaLinha.findElement(By.cssSelector("td:nth-child(1)"));
         input.click();
 
         browser.findElement(By.id("data")).sendKeys(data);
         browser.findElement(By.id("hora")).sendKeys(hora);
 
-        browser.findElement(By.id("button-submit")).click();
+        browser.findElement(By.id("submit-button")).click();
 
         // ou retornar locadora
-        return new LocacoesPage(browser);
+        return new ListaDeLocacoesClientePage(browser);
     }
 
     public boolean isPaginaAtual() {

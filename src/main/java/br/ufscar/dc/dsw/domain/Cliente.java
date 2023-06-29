@@ -44,6 +44,10 @@ public class Cliente implements Usuario {
         this.telefone = telefone;
     }
 
+    public Cliente(String cpf) {
+        this.cpf = cpf;
+    }
+
     public String getCpf() {
         return cpf;
     }

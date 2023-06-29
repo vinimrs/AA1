@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.dao;
 
 import br.ufscar.dc.dsw.domain.Locadora;
+import br.ufscar.dc.dsw.domain.Locadora;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -191,5 +192,36 @@ public class LocadoraDAO extends GenericDAO {
         }
         return locadora;
     }
+
+    public Locadora getByCnpj(String cnpj) {
+        Locadora locadora = null;
+
+        String sql = "SELECT * from Locadora WHERE cnpj = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, cnpj);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String email = resultSet.getString("email");
+                String nome = resultSet.getString("nome");
+                String senha = resultSet.getString("senha");
+                String cidade = resultSet.getString("cidade");
+                Long id = resultSet.getLong("id");
+
+                locadora = new Locadora(id, cnpj, nome, email, senha, cidade);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return locadora;
+    }
+
 
 }

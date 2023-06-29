@@ -170,4 +170,36 @@ public class ClienteDAO extends GenericDAO {
         return cliente;
     }
 
+    public Cliente getByCpf(String cpf) {
+        Cliente cliente = null;
+
+        String sql = "SELECT * from Cliente WHERE cpf = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, cpf);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String email = resultSet.getString("email");
+                String nome = resultSet.getString("nome");
+                Long id = resultSet.getLong("id");
+                String senha = resultSet.getString("senha");
+                String telefone = resultSet.getString("telefone");
+                String sexo = resultSet.getString("sexo");
+                LocalDate dataNascimento = LocalDate.parse(resultSet.getString("data_nascimento"));
+
+                cliente = new Cliente(id, cpf, nome, email, senha, telefone, sexo, dataNascimento);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return cliente;
+    }
+
 }

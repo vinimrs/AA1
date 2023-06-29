@@ -1,6 +1,6 @@
 package br.ufscar.dc.dsw.domain;
 
-public class Locadora {
+public class Locadora implements Usuario {
     private Long id;
     private String cnpj;
     private String nome;
@@ -29,6 +29,10 @@ public class Locadora {
         this.cidade = cidade;
     }
 
+    public Locadora(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
     public Long getId() {
         return id;
     }
@@ -49,6 +53,11 @@ public class Locadora {
         return nome;
     }
 
+    @Override
+    public String getLogin() {
+        return this.email;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -59,6 +68,11 @@ public class Locadora {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String getPapel() {
+        return "LOCADORA";
     }
 
     public String getSenha() {

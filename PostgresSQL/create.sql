@@ -32,8 +32,8 @@ create table Locacao(id serial primary key,
                      data_locacao date not null,
                      horario_locacao time not null,
                      cpf_cliente varchar(15) not null,
-                     editora_cnpj varchar(20) not null,
-                     foreign key (editora_cnpj) references Locadora(cnpj),
+                     cnpj_locadora varchar(20) not null,
+                     foreign key (cnpj_locadora) references Locadora(cnpj),
                      foreign key (cpf_cliente) references Cliente(cpf),
                      constraint unique_cliente unique (data_locacao, horario_locacao, cpf_cliente)
 );
@@ -67,14 +67,14 @@ insert into Cliente(cpf,nome,email,senha,telefone, sexo,data_nascimento) values 
                                                                                     'Masculino',
                                                                                     '18/09/2000');
 
-insert into Locacao(data_locacao,horario_locacao,cpf_cliente,editora_cnpj) values (
+insert into Locacao(data_locacao,horario_locacao,cpf_cliente,cnpj_locadora) values (
                                                                                       '22/12/2023',
                                                                                       '12:00',
                                                                                       '222.222.222-00',
                                                                                       '71.150.470/0001-40'
                                                                                   );
 
-insert into Locacao(data_locacao,horario_locacao,cpf_cliente,editora_cnpj) values (
+insert into Locacao(data_locacao,horario_locacao,cpf_cliente,cnpj_locadora) values (
                                                                                       '22/12/2023',
                                                                                       '12:00',
                                                                                       '111.111.111-00',

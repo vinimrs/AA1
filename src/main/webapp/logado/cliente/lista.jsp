@@ -20,8 +20,8 @@
         <fmt:message key="locadoras.entity" />
       </a>
       &nbsp;&nbsp;&nbsp;
-      <a href="/${sessionScope.contextPath}/livros">
-        <fmt:message key="books.entity" />
+      <a id="link-locacoes" href="/${sessionScope.contextPath}/locacoes/gerenciamento">
+        <fmt:message key="locacoes.entity" />
       </a>
       &nbsp;&nbsp;&nbsp;
       <a href="${pageContext.request.contextPath}/logout.jsp">

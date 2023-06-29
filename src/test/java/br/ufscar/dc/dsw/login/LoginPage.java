@@ -2,6 +2,8 @@ package br.ufscar.dc.dsw.login;
 
 import br.ufscar.dc.dsw.PageObject;
 import br.ufscar.dc.dsw.clientes.ClientesPage;
+import br.ufscar.dc.dsw.locacoes.ListaDeLocacoesClientePage;
+import br.ufscar.dc.dsw.locacoes.ListaDeLocacoesLocadoraPage;
 import br.ufscar.dc.dsw.locacoes.LocacoesPage;
 import br.ufscar.dc.dsw.locadoras.ListaDeLocadorasPage;
 import br.ufscar.dc.dsw.locadoras.LocadorasPage;
@@ -34,9 +36,9 @@ public class LoginPage extends PageObject {
     return browser.getPageSource().contains("Usuário não encontrado!");
   }
 
-  public LocacoesPage efetuarLoginCliente() {
+  public ListaDeLocacoesClientePage efetuarLoginCliente() {
     browser.findElement(By.id("input-submit")).click();
-    return new LocacoesPage(browser);
+    return new ListaDeLocacoesClientePage(browser);
   }
 
   public ClientesPage efetuarLoginAdmin() {
@@ -45,9 +47,9 @@ public class LoginPage extends PageObject {
   }
 
   // verificar qual pagina a locadora vai dps do login
-    public LoginPage efetuarLoginLocadora() {
+    public ListaDeLocacoesLocadoraPage efetuarLoginLocadora() {
       browser.findElement(By.id("input-submit")).click();
-      return new LoginPage();
+      return new ListaDeLocacoesLocadoraPage(browser);
     }
 
   public void navegarParaPaginaDeLocadoras() {

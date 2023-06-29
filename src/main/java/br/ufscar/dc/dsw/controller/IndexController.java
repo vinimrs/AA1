@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.dao.AdminDAO;
 import br.ufscar.dc.dsw.dao.ClienteDAO;
+import br.ufscar.dc.dsw.dao.LocacaoDAO;
+import br.ufscar.dc.dsw.dao.LocadoraDAO;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
 
@@ -39,18 +41,24 @@ public class IndexController extends HttpServlet {
                     AdminDAO adminDAO = new AdminDAO();
                     usuario = adminDAO.getByLogin(login);
                 }
-//                Usuario usuario = dao.getbyLogin(login);
+
+                if(usuario == null) {
+                    LocadoraDAO locadoraDAO = new LocadoraDAO();
+                    usuario = locadoraDAO.getByEmail(login);
+                }
+
                 if (usuario != null) {
                     if (usuario.getSenha().equalsIgnoreCase(senha)) {
                         request.getSession().setAttribute("usuarioLogado", usuario);
                         String contextPath = request.getContextPath().replace("/", "");
                         request.getSession().setAttribute("contextPath", contextPath);
+                        System.out.println(usuario.getPapel());
                         if (usuario.getPapel().equals("ADMIN")) {
                             response.sendRedirect("clientes/");
                         } else if (usuario.getPapel().equals("CLIENTE")){
-                            response.sendRedirect("/");
-                        } else {
-                            response.sendRedirect("/");
+                            response.sendRedirect("locacoes/");
+                        } else if (usuario.getPapel().equals("LOCADORA")){
+                            response.sendRedirect("locacoes/");
                         }
                         return;
                     } else {

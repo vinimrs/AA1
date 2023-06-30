@@ -21,20 +21,14 @@ public class LocacoesTest {
   private ListaDeLocacoesLocadoraPage paginaListaLocacoesLocadora;
   private CadastroLocacaoPage paginaDeCadastro;
 
-//  @BeforeEach
-//  public void beforeEach() {
-//    LoginPage paginaDeLogin = new LoginPage();
-//    paginaDeLogin.preencheFormularioLogin("fulano", "pass");
-//    this.paginaListaLocacoesCliente = paginaDeLogin.efetuarLoginCliente();
-//    this.paginaDeCadastro = paginaDeLocacoes.carregarFormulario();
-//  }
-
-//  @AfterEach
-//  public void afterEach() {
-//    if (this.paginaListaLocacoesCliente != null) {
-//      this.paginaListaLocacoesCliente.fechar();
-//    }
-//  }
+  @AfterEach
+  public void afterEach() {
+    if (this.paginaListaLocacoesCliente != null) {
+      this.paginaListaLocacoesCliente.fechar();
+    } else if (this.paginaListaLocacoesLocadora != null) {
+      this.paginaListaLocacoesLocadora.fechar();
+    }
+  }
 
   private void entrarComoCliente() {
     LoginPage paginaDeLogin = new LoginPage();
@@ -57,7 +51,7 @@ public class LocacoesTest {
 
     String data = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     // escolher uma hora livre
-    String hora = "800PM";
+    String hora = "1100PM";
 
     this.paginaListaLocacoesCliente = paginaDeCadastro.cadastrarLocacao(data, hora);
 
@@ -69,7 +63,7 @@ public class LocacoesTest {
 
   }
 
-  // R7: Listagem de todas as locacoes de um cliente
+  // R8: Listagem de todas as locacoes de uma locadora
   @Test
   public void deveriaListarLocacoesDeUmaLocadora() {
     this.entrarComoCliente();
@@ -78,7 +72,7 @@ public class LocacoesTest {
 
     String data = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 //     escolher uma hora livre
-    String hora = "1000PM";
+    String hora = "1100PM";
 
     this.paginaListaLocacoesCliente = paginaDeCadastro.cadastrarLocacao(data, hora);
 

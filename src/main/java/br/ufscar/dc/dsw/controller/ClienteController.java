@@ -116,10 +116,17 @@ public class ClienteController extends HttpServlet {
         String sexo = request.getParameter("sexo");
         LocalDate dataNascimento = LocalDate.parse(request.getParameter("dataNascimento"));
 
-        Cliente cliente = new Cliente(cpf, nome, email, senha, telefone, sexo, dataNascimento);
+        try {
+            Cliente cliente = new Cliente(cpf, nome, email, senha, telefone, sexo, dataNascimento);
 
-        dao.insert(cliente);
-        response.sendRedirect("lista");
+            dao.insert(cliente);
+            response.sendRedirect("lista");
+        } catch (RuntimeException e) {
+            Erro erros = new Erro();
+            erros.add("CPF ou e-mail já cadastrados.");
+            request.setAttribute("mensagens", erros);
+            apresentaFormCadastro(request, response);
+        }
     }
 
     private void atualize(HttpServletRequest request, HttpServletResponse response)

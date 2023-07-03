@@ -45,16 +45,21 @@ public class LocacaoController extends HttpServlet {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
         Erro erros = new Erro();
 
-        String action = request.getPathInfo();
-        if (action == null) {
-            action = "/";
-        }
 
         if(usuario == null) {
             erros.add("Usuário não logado.");
             request.setAttribute("mensagens", erros);
             response.sendRedirect("/app/login.jsp");
             return;
+        }
+
+        String action = request.getPathInfo();
+        if (action == null || action.equals("/")) {
+            if(usuario.getPapel().equals("ADMIN")) {
+                action = "/gerenciamento";
+            } else {
+                action = "/";
+            }
         }
 
         try {
@@ -127,7 +132,7 @@ public class LocacaoController extends HttpServlet {
     private void listaLocacoesClientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
-        List<Locacao> listaLocacoes = dao.getAllFromClient(usuario);
+        List<Locacao> listaLocacoes = dao.getAllFromClient(usuario.getId());
 
         request.setAttribute("listaLocacoes", listaLocacoes);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/locacao/listaLocacoesCliente.jsp");
@@ -137,7 +142,7 @@ public class LocacaoController extends HttpServlet {
     private void listaLocacoesLocadora(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
-        List<Locacao> listaLocacoes = dao.getAllFromLocadora(usuario);
+        List<Locacao> listaLocacoes = dao.getAllFromLocadora(usuario.getId());
 
         request.setAttribute("listaLocacoes", listaLocacoes);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/locacao/listaLocacoesLocadora.jsp");
@@ -172,18 +177,23 @@ public class LocacaoController extends HttpServlet {
     private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-
         LocalDate dataLocacao = LocalDate.parse(request.getParameter("data"));
         LocalTime horarioLocacao = LocalTime.parse(request.getParameter("hora"));
         String cpfCliente = request.getParameter("cpf");
         String cnpjLocadora = request.getParameter("cnpj");
 
-        System.out.println(dataLocacao.toString() + horarioLocacao.toString() + cpfCliente + cnpjLocadora);
+        try {
+            Locacao locacao = new Locacao(horarioLocacao, dataLocacao, new Cliente(cpfCliente), new Locadora(cnpjLocadora));
 
-        Locacao locacao = new Locacao(horarioLocacao, dataLocacao, new Cliente(cpfCliente), new Locadora(cnpjLocadora));
+            dao.insert(locacao);
+            response.sendRedirect("lista");
+        } catch (RuntimeException e) {
+            Erro erros = new Erro();
+            erros.add("Não é possivel alugar mais de uma bicicleta no mesmo horário.");
+            request.setAttribute("mensagens", erros);
+            apresentaFormCadastro(request, response);
+        }
 
-        dao.insert(locacao);
-        response.sendRedirect("lista");
     }
 
     private void atualize(HttpServletRequest request, HttpServletResponse response)

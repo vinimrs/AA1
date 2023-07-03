@@ -1,6 +1,8 @@
 package br.ufscar.dc.dsw.controller;
 
+import br.ufscar.dc.dsw.dao.LocacaoDAO;
 import br.ufscar.dc.dsw.dao.LocadoraDAO;
+import br.ufscar.dc.dsw.domain.Locacao;
 import br.ufscar.dc.dsw.domain.Locadora;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
@@ -103,6 +105,7 @@ public class LocadoraController extends HttpServlet {
 
     private void gerencia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Locadora> listaLocadoras = dao.getAll();
+
         request.setAttribute("listaLocadoras", listaLocadoras);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/locadora/lista.jsp");
         dispatcher.forward(request, response);
@@ -133,11 +136,17 @@ public class LocadoraController extends HttpServlet {
         String email = request.getParameter("email");
         String cidade = request.getParameter("cidade");
 //        Long id = Long.parseLong(request.getParameter("id"));
+        try {
+            Locadora locadora = new Locadora(cnpj, nome, email, senha, cidade);
 
-        Locadora locadora = new Locadora(cnpj, nome, email, senha, cidade);
-
-        dao.insert(locadora);
-        response.sendRedirect("gerenciamento");
+            dao.insert(locadora);
+            response.sendRedirect("gerenciamento");
+        } catch (RuntimeException e) {
+            Erro erros = new Erro();
+            erros.add("CNPJ já cadastrado.");
+            request.setAttribute("mensagens", erros);
+            apresentaFormCadastro(request, response);
+        }
     }
 
     private void atualize(HttpServletRequest request, HttpServletResponse response)
@@ -160,6 +169,7 @@ public class LocadoraController extends HttpServlet {
     private void remove(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Long id = Long.parseLong(request.getParameter("id"));
 
+        new LocacaoDAO().removeAllLocacoesFromLocadora(id);
         Locadora locadora = new Locadora(id);
         dao.delete(locadora);
         response.sendRedirect("gerenciamento");

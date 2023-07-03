@@ -45,11 +45,24 @@
     minHour = primeiraCasa.concat(next.toString()).concat(":00");
   }
 %>
+<br/>
 
-<input id="data" type="date" name="data" min="<%=minDate%>" value="<%=minDate%>" />
-<%--<input type="time" step="3600000" />--%>
-<input id="hora" type="time" step="3600" name="hora" min="<%=minHour%>" value="<%=minHour%>" >
-<input type="hidden" name="cpf" value="${usuarioLogado.cpf}">
+<div>
+  <div>
+    <label for="data" ><fmt:message key="locacao.date" /> </label>
+    <input id="data" type="date" name="data" min="<%=minDate%>" value="<%=minDate%>" />
+  </div>
+  <br/>
+
+  <div>
+    <label for="hora" ><fmt:message key="locacao.hour" /> </label>
+
+    <input id="hora" type="time" step="3600" name="hora" min="<%=minHour%>" value="<%=minHour%>" >
+  </div>
+
+  <input type="hidden" name="cpf" value="${usuarioLogado.cpf}">
+</div>
+
 <br/>
 <br/>
 

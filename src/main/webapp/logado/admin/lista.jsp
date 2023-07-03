@@ -19,12 +19,12 @@
       <fmt:message key="admins.welcome" />
     </h1>
     <h2>
-      <a href="/${sessionScope.contextPath}/editoras/gerenciar">
-        <fmt:message key="publishers.entity" />
+      <a id="link-locadoras" href="/${sessionScope.contextPath}/locadoras/gerenciamento">
+        <fmt:message key="locadoras.entity" />
       </a>
       &nbsp;&nbsp;&nbsp;
-      <a href="/${sessionScope.contextPath}/livros">
-        <fmt:message key="books.entity" />
+      <a id="link-locacoes" href="/${sessionScope.contextPath}/locacoes/gerenciamento">
+        <fmt:message key="locacoes.entity" />
       </a>
       &nbsp;&nbsp;&nbsp;
       <a href="${pageContext.request.contextPath}/logout.jsp">

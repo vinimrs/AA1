@@ -19,14 +19,6 @@
       <fmt:message key="locadoras.welcome" />
     </h1>
     <h2>
-      <a href="/${sessionScope.contextPath}/editoras/gerenciar">
-        <fmt:message key="publishers.entity" />
-      </a>
-      &nbsp;&nbsp;&nbsp;
-      <a href="/${sessionScope.contextPath}/livros">
-        <fmt:message key="books.entity" />
-      </a>
-      &nbsp;&nbsp;&nbsp;
       <a id="logout-button" href="${pageContext.request.contextPath}/logout.jsp">
         <fmt:message key="exit.link" />
       </a>

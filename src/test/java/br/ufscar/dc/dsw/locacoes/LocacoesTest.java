@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw.locacoes;
 
+import br.ufscar.dc.dsw.clientes.ClientesPage;
 import br.ufscar.dc.dsw.login.LoginPage;
 import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.AfterEach;
@@ -38,7 +39,7 @@ public class LocacoesTest {
 
   private void entrarComoLocadora() {
     LoginPage paginaDeLogin = new LoginPage();
-    paginaDeLogin.preencheFormularioLogin("vini@email.com", "12345");
+    paginaDeLogin.preencheFormularioLogin("locacaobrito@email.com.br", "12345");
     this.paginaListaLocacoesLocadora = paginaDeLogin.efetuarLoginLocadora();
   }
 
@@ -50,8 +51,8 @@ public class LocacoesTest {
     this.paginaDeCadastro = paginaListaLocacoesCliente.carregarFormulario();
 
     String data = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-    // escolher uma hora livre
-    String hora = "1100PM";
+    // escolher uma hora livre depois da atual
+    String hora = "1000PM";
 
     this.paginaListaLocacoesCliente = paginaDeCadastro.cadastrarLocacao(data, hora);
 

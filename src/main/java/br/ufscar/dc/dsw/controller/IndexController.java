@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.dao.AdminDAO;
 import br.ufscar.dc.dsw.dao.ClienteDAO;
-import br.ufscar.dc.dsw.dao.LocacaoDAO;
 import br.ufscar.dc.dsw.dao.LocadoraDAO;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
@@ -52,7 +51,6 @@ public class IndexController extends HttpServlet {
                         request.getSession().setAttribute("usuarioLogado", usuario);
                         String contextPath = request.getContextPath().replace("/", "");
                         request.getSession().setAttribute("contextPath", contextPath);
-                        System.out.println(usuario.getPapel());
                         if (usuario.getPapel().equals("ADMIN")) {
                             response.sendRedirect("clientes/");
                         } else if (usuario.getPapel().equals("CLIENTE")){

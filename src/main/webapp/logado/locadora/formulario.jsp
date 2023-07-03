@@ -10,6 +10,7 @@
 
     <head>
         <title><fmt:message key="page.title" /></title>
+        <link href="${pageContext.request.contextPath}/layout.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body>
@@ -18,6 +19,15 @@
         <h1>
             <fmt:message key="locadoras.welcome" />
         </h1>
+        <c:if test="${mensagens.existeErros}">
+            <div id="erro">
+                <ul>
+                    <c:forEach var="erro" items="${mensagens.erros}">
+                        <li> ${erro} </li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
         <h2>
             <a href="${pageContext.request.contextPath}/logout.jsp">
                 <fmt:message key="exit.link" />
@@ -43,13 +53,6 @@
             </c:otherwise>
         </c:choose>
     </div>
-    <c:if test="${!empty requestScope.mensagens}">
-        <ul class="erro">
-            <c:forEach items="${requestScope.mensagens}" var="mensagem">
-                <li>${mensagem}</li>
-            </c:forEach>
-        </ul>
-    </c:if>
     </body>
 </fmt:bundle>
 

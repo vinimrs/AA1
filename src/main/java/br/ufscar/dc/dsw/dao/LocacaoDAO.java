@@ -131,7 +131,7 @@ public class LocacaoDAO extends GenericDAO {
         return locacao;
     }
 
-    public List<Locacao> getAllFromClient(Usuario usuario) {
+    public List<Locacao> getAllFromClient(Long id) {
         List<Locacao> Locacoes = new ArrayList<>();
 
         String sql = "SELECT * from Locacao WHERE cpf_cliente = ?";
@@ -140,18 +140,18 @@ public class LocacaoDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            Cliente cliente = new ClienteDAO().get(usuario.getId());
+            Cliente cliente = new ClienteDAO().get(id);
             String cpfCliente = cliente.getCpf();
             statement.setString(1, cpfCliente);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                long id = resultSet.getLong("id");
+                long idLocacao = resultSet.getLong("id");
                 LocalDate dataLocacao = LocalDate.parse(resultSet.getString("data_locacao"));
                 LocalTime horarioLocacao = LocalTime.parse(resultSet.getString("horario_locacao"));
                 Locadora locadora = new LocadoraDAO().getByCnpj(resultSet.getString("cnpj_locadora"));
 
-                Locacao locacao = new Locacao(id, horarioLocacao, dataLocacao, cliente, locadora);
+                Locacao locacao = new Locacao(idLocacao, horarioLocacao, dataLocacao, cliente, locadora);
                 Locacoes.add(locacao);
             }
 
@@ -164,7 +164,7 @@ public class LocacaoDAO extends GenericDAO {
         return Locacoes;
     }
 
-    public List<Locacao> getAllFromLocadora(Usuario usuario) {
+    public List<Locacao> getAllFromLocadora(Long id) {
         List<Locacao> Locacoes = new ArrayList<>();
 
         String sql = "SELECT * from Locacao WHERE cnpj_locadora = ?";
@@ -173,18 +173,18 @@ public class LocacaoDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            Locadora locadora = new LocadoraDAO().get(usuario.getId());
+            Locadora locadora = new LocadoraDAO().get(id);
             String cnpjLocadora = locadora.getCnpj();
             statement.setString(1, cnpjLocadora);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                long id = resultSet.getLong("id");
+                long idLocacao = resultSet.getLong("id");
                 LocalDate dataLocacao = LocalDate.parse(resultSet.getString("data_locacao"));
                 LocalTime horarioLocacao = LocalTime.parse(resultSet.getString("horario_locacao"));
                 Cliente cliente = new ClienteDAO().getByCpf(resultSet.getString("cpf_cliente"));
 
-                Locacao locacao = new Locacao(id, horarioLocacao, dataLocacao, cliente, locadora);
+                Locacao locacao = new Locacao(idLocacao, horarioLocacao, dataLocacao, cliente, locadora);
                 Locacoes.add(locacao);
             }
 
@@ -195,5 +195,24 @@ public class LocacaoDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
         return Locacoes;
+    }
+
+    public void removeAllLocacoesFromLocadora(Long id) {
+        String sql = "DELETE FROM Locacao where cnpj_locadora = ?";
+
+        Locadora locadora = new LocadoraDAO().get(id);
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, locadora.getCnpj());
+            statement.executeUpdate();
+
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

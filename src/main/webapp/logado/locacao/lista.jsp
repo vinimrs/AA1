@@ -20,6 +20,7 @@
         <h1>
             <fmt:message key="locacoes.welcome" />
         </h1>
+
         <h2>
             <a href="/${sessionScope.contextPath}/locacoes/cadastro">
                 <fmt:message key="locacoes.create" />

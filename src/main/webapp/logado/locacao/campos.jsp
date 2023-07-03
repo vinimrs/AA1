@@ -61,6 +61,7 @@
   </div>
 
   <input type="hidden" name="cpf" value="${usuarioLogado.cpf}">
+  <input type="hidden" name="emailCliente" value="${usuarioLogado.email}">
 </div>
 
 <br/>

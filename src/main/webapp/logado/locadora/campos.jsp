@@ -7,10 +7,10 @@
     <caption>
         <c:choose>
             <c:when test="${locadora != null}">
-                <fmt:message key="clients.update" />
+                <fmt:message key="locadoras.update" />
             </c:when>
             <c:otherwise>
-                <fmt:message key="clients.create" />
+                <fmt:message key="locadoras.create" />
             </c:otherwise>
         </c:choose>
     </caption>
@@ -47,7 +47,7 @@
     <tr>
         <td><label for="senha"><fmt:message key="locadora.password" />
         </label></td>
-        <td><input id="senha" type="text" name="senha" size="20" required
+        <td><input id="senha" type="password" name="senha" size="20" required
                    value="<c:out value='${locadora.senha}' />" /></td>
     </tr>
     <tr>

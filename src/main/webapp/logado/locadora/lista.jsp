@@ -19,6 +19,14 @@
       <fmt:message key="locadoras.welcome" />
     </h1>
     <h2>
+      <a id="link-clientes" href="/${sessionScope.contextPath}/clientes/gerenciamento">
+        <fmt:message key="clients.list" />
+      </a>
+      &nbsp;&nbsp;&nbsp;
+      <a id="link-locacoes" href="/${sessionScope.contextPath}/locacoes/gerenciamento">
+        <fmt:message key="locacoes.list" />
+      </a>
+        &nbsp;&nbsp;&nbsp;
       <a id="logout-button" href="${pageContext.request.contextPath}/logout.jsp">
         <fmt:message key="exit.link" />
       </a>

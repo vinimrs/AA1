@@ -17,7 +17,7 @@
     <%@include file="../../internacionalizacao.jsp"%>
     <div align="center">
         <h1>
-            <fmt:message key="locadoras.welcome" />
+            <fmt:message key="locadoras.create" />
         </h1>
         <c:if test="${mensagens.existeErros}">
             <div id="erro">

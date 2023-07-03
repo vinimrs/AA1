@@ -20,6 +20,11 @@
         <h1>
             <fmt:message key="locacoes.welcome" />
         </h1>
+        <c:if test="${not empty requestScope.message}">
+            <div>
+                <p>${requestScope.message}</p>
+            </div>
+        </c:if>
         <h2>
             <a id="create-locacao-link" href="/${sessionScope.contextPath}/locacoes/cadastro">
                 <fmt:message key="locacoes.create" />
@@ -32,7 +37,7 @@
         <br />
         <h3><fmt:message key="locacoes.client.list" /></h3>
         <br />
-    </div>
+    </>
 
     <div align="center">
         <table id="tabela-locacoes" border="1">

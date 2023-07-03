@@ -123,9 +123,11 @@ public class ClienteController extends HttpServlet {
             response.sendRedirect("lista");
         } catch (RuntimeException e) {
             Erro erros = new Erro();
-            erros.add("CPF ou e-mail já cadastrados.");
+            erros.add("Formulário com dados inválidos!");
+            erros.add("CPF ou E-mail já cadastrados, tente novamente com um novo!");
             request.setAttribute("mensagens", erros);
-            apresentaFormCadastro(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher("/invalidForm.jsp");
+            rd.forward(request, response);
         }
     }
 

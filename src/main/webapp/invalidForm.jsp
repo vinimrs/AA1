@@ -7,13 +7,15 @@
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
 <html lang="${language}">
+<fmt:bundle basename="message">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Autorização de Usuário</title>
   <link href="${pageContext.request.contextPath}/layout.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-  <h1>Autorização de Usuário</h1>
+  <h1>Dados inválidos</h1>
+
   <c:if test="${mensagens.existeErros}">
     <div id="erro">
       <ul>
@@ -23,5 +25,9 @@
       </ul>
     </div>
   </c:if>
+  <a>
+    <input type="button" value="Voltar" onclick="history.back()" />
+  </a>
 </body>
+</fmt:bundle>
 </html>

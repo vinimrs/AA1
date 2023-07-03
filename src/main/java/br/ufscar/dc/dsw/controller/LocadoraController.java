@@ -143,9 +143,11 @@ public class LocadoraController extends HttpServlet {
             response.sendRedirect("gerenciamento");
         } catch (RuntimeException e) {
             Erro erros = new Erro();
-            erros.add("CNPJ já cadastrado.");
+            erros.add("Formulário com dados inválidos!");
+            erros.add("CNPJ já cadastrado, tente novamente com um novo!");
             request.setAttribute("mensagens", erros);
-            apresentaFormCadastro(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher("/invalidForm.jsp");
+            rd.forward(request, response);
         }
     }
 

@@ -33,13 +33,13 @@ public class LocacoesTest {
 
   private void entrarComoCliente() {
     LoginPage paginaDeLogin = new LoginPage();
-    paginaDeLogin.preencheFormularioLogin("vini@vini.com", "12345");
+    paginaDeLogin.preencheFormularioLogin("viniciusromualdo@estudante.ufscar.br", "12345");
     this.paginaListaLocacoesCliente = paginaDeLogin.efetuarLoginCliente();
   }
 
   private void entrarComoLocadora() {
     LoginPage paginaDeLogin = new LoginPage();
-    paginaDeLogin.preencheFormularioLogin("locacaobrito@email.com.br", "12345");
+    paginaDeLogin.preencheFormularioLogin("viniromualdo082@gmail.com", "12345");
     this.paginaListaLocacoesLocadora = paginaDeLogin.efetuarLoginLocadora();
   }
 
@@ -52,7 +52,7 @@ public class LocacoesTest {
 
     String data = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     // escolher uma hora livre depois da atual
-    String hora = "1000PM";
+    String hora = "1100AM";
 
     this.paginaListaLocacoesCliente = paginaDeCadastro.cadastrarLocacao(data, hora);
 
@@ -73,7 +73,7 @@ public class LocacoesTest {
 
     String data = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 //     escolher uma hora livre
-    String hora = "1100PM";
+    String hora = "1000AM";
 
     this.paginaListaLocacoesCliente = paginaDeCadastro.cadastrarLocacao(data, hora);
 

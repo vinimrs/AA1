@@ -1,15 +1,18 @@
 package br.ufscar.dc.dsw.controller;
 
+import br.ufscar.dc.dsw.dao.ClienteDAO;
 import br.ufscar.dc.dsw.dao.LocacaoDAO;
 import br.ufscar.dc.dsw.dao.LocadoraDAO;
 import br.ufscar.dc.dsw.domain.Cliente;
 import br.ufscar.dc.dsw.domain.Locacao;
 import br.ufscar.dc.dsw.domain.Locadora;
 import br.ufscar.dc.dsw.domain.Usuario;
+import br.ufscar.dc.dsw.util.EmailUtility;
 import br.ufscar.dc.dsw.util.Erro;
 import org.checkerframework.checker.units.qual.C;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,9 +30,19 @@ public class LocacaoController extends HttpServlet {
 
     private LocacaoDAO dao;
 
-    @Override
+    private String host;
+    private String port;
+    private String user;
+    private String pass;
+
     public void init() {
-        dao = new LocacaoDAO();
+        // reads SMTP server setting from web.xml file
+        ServletContext context = getServletContext();
+        host = context.getInitParameter("host");
+        port = context.getInitParameter("port");
+        user = context.getInitParameter("user");
+        pass = context.getInitParameter("pass");
+        this.dao = new LocacaoDAO();
     }
 
     @Override
@@ -129,6 +142,7 @@ public class LocacaoController extends HttpServlet {
         rd.forward(request, response);
     }
 
+
     private void listaLocacoesClientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
@@ -182,16 +196,51 @@ public class LocacaoController extends HttpServlet {
         String cpfCliente = request.getParameter("cpf");
         String cnpjLocadora = request.getParameter("cnpj");
 
+        String emailCliente = request.getParameter("emailCliente");
+
+        Locadora locadora = new LocadoraDAO().getByCnpj(cnpjLocadora);
+        String emailLocadora = locadora.getEmail();
+
+        Cliente cliente = new ClienteDAO().getByCpf(cpfCliente);
+
         try {
             Locacao locacao = new Locacao(horarioLocacao, dataLocacao, new Cliente(cpfCliente), new Locadora(cnpjLocadora));
 
             dao.insert(locacao);
+
+            String emailDoSistema = "locadoradebicicletasdsw1@gmail.com";
+            String assuntoCliente = "Seu aluguel foi aprovado!";
+            String conteudoCliente = "Aproveite a sua bicicleta alugada na data " + dataLocacao + " às " + horarioLocacao +
+                    " na locadora " + locadora.getNome() + "!";
+
+            String assuntoLocadora = "Um aluguel foi aprovado!";
+            String conteudoLocadora = "O cliente " + cliente.getNome() + " alugou uma bicicleta na data " + dataLocacao + " às " + horarioLocacao +
+                    " na sua locadora!";
+
+            String resultMessage = "";
+
+            try {
+                EmailUtility.sendEmail(host, port, user, pass, emailCliente, assuntoCliente,
+                        conteudoCliente, emailDoSistema);
+                EmailUtility.sendEmail(host, port, user, pass, emailLocadora, assuntoLocadora,
+                        conteudoLocadora, emailDoSistema);
+                resultMessage = "A sua locacao foi cadastrada com sucesso!";
+                request.setAttribute("message", resultMessage);
+            } catch (Exception ex) {
+                Erro erros = new Erro();
+                erros.add("Ocorreu um erro: " + ex.getMessage());
+
+                request.setAttribute("erros", erros);
+            }
+
             response.sendRedirect("lista");
         } catch (RuntimeException e) {
             Erro erros = new Erro();
+            erros.add("Formulário com dados inválidos!");
             erros.add("Não é possivel alugar mais de uma bicicleta no mesmo horário.");
             request.setAttribute("mensagens", erros);
-            apresentaFormCadastro(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher("/invalidForm.jsp");
+            rd.forward(request, response);
         }
 
     }

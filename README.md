@@ -73,6 +73,3 @@ Ideias de melhorias para o projeto:
 
 [Servlets]: https://en.wikipedia.org/wiki/Jakarta_Servlet
 [JSP]: https://pt.wikipedia.org/wiki/JavaServer_Pages
-
-
-## Observações apresentação 03/07

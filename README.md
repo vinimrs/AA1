@@ -8,7 +8,7 @@
    <img src="https://img.shields.io/github/license/vinimrs/VinChat?color=black" align="center" />
 </h1>
 
-Projeto de implementação de uma aplicação web de um sistema para locações de bicicletas online utilizando as tecnologias **Java servlets e JSP**, com objetivo de contemplar as principais responsabilidades de uma locação de bicicleta explorando e conhecendo melhor como funciona o desenvolvimento de sistemas web.
+Projeto de implementação de uma aplicação web de um sistema para locações de bicicletas online utilizando as tecnologias **Java [Servlets] e [JSP]** e para testes foram criados testes de interface e unitários utilizando **[JUnit] e [Selenium]**, com objetivo de contemplar as principais responsabilidades de uma locação de bicicleta explorando e conhecendo melhor como funciona o desenvolvimento de sistemas web.
 
 <p align="center">
 
@@ -62,6 +62,8 @@ Assim que for inicializado será aberto o seu projeto no navegador podendo utili
 
 - [Servlets]
 - [JSP]
+- [Selenium]
+- [Junit]
 
 ## ✅ Melhorias
 
@@ -73,3 +75,5 @@ Ideias de melhorias para o projeto:
 
 [Servlets]: https://en.wikipedia.org/wiki/Jakarta_Servlet
 [JSP]: https://pt.wikipedia.org/wiki/JavaServer_Pages
+[JUnit]: https://junit.org/junit5/
+[Selenium]: https://www.selenium.dev/
